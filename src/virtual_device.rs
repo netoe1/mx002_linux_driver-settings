@@ -7,6 +7,14 @@ use evdev::{
     UinputAbsSetup,
 };
 
+use crate::config::{PEN_THRESHOLD, PEN_STRENGTH_SCALING};
+use std::sync::atomic::Ordering;
+
+
+const PEN_THRESHOLD_STD : i32 = 600;
+const PEN_STRENGTH_STD : i32 = 2;
+
+
 #[derive(Default)]
 pub struct RawDataReader {
     pub data: Vec<u8>,
@@ -129,7 +137,7 @@ impl DeviceDispatcher {
                     .cloned()
                     .collect::<Vec<Key>>(),
             )
-            .expect("mx002-driver-err:Error building virtual keyborad"),
+            .expect("mx002-driver-err:Error building virtual keyboard"),
             was_touching: false,
         }
     }
@@ -247,13 +255,17 @@ impl DeviceDispatcher {
 
         self.pen_emit_touch(raw_data);
     }
+
+
+    // netoe1-modify:
     fn normalize_pressure(raw_pressure: i32) -> i32 {
-        let proximity_threshold = 600; // Adjust for proximity sensitivity
-        let strength_scaling = 2; // Adjust for strength of the press
+        // let proximity_threshold = 600;      // Adjust for proximity sensitivity
+        // let strength_scaling = 2;           // Adjust for strength of the press
+    
     
         match 1740 - raw_pressure {
-            x if x <= proximity_threshold => 0,
-            x => x * strength_scaling, // Scale the pressure for stronger presses
+            x if x <= PEN_THRESHOLD.load(Ordering::Relaxed)=> 0,
+            x => x * PEN_STRENGTH_SCALING.load(Ordering::Relaxed), // Scale the pressure for stronger presses
         }
     }
 
