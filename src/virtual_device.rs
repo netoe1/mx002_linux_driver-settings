@@ -11,10 +11,6 @@ use crate::config::{PEN_THRESHOLD, PEN_STRENGTH_SCALING};
 use std::sync::atomic::Ordering;
 
 
-const PEN_THRESHOLD_STD : i32 = 600;
-const PEN_STRENGTH_STD : i32 = 2;
-
-
 #[derive(Default)]
 pub struct RawDataReader {
     pub data: Vec<u8>,

@@ -7,13 +7,11 @@ use signal_hook::flag::register;
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::Arc;
 use std::u16;
-use std::io;    //netoe1-mod: Add IO 
-
+use std::io;   
 use physical_device::PhysicalDevice;
 use virtual_device::{DeviceDispatcher, RawDataReader};
 
 // Interface to change variables in config file.
-
 use crate::config::{set_pen_threshold, set_pen_strength};
 
 const VID: u16 = 0x08f2;
@@ -60,10 +58,10 @@ fn main() {
 
     let strength = strength.clamp(1, 10);
 
-    println!("mx002-driver-log:Values typed below!");
-    println!("mx002-driver-log:Configured sens.");
-    println!("mx002-driver-log:Threshold proximity = {}", threshold);
-    println!("mx002-driver-log:Strength scaling = {}", strength);
+    println!("mx002-driver-log: Values typed below!");
+    println!("mx002-driver-log: Configured sens.");
+    println!("mx002-driver-log: Threshold proximity = {}", threshold);
+    println!("mx002-driver-log: Strength scaling = {}", strength);
 
     // Setting values.
     set_pen_strength(strength);

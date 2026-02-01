@@ -13,7 +13,7 @@ pub struct PhysicalDevice {
 
 impl PhysicalDevice {
     pub fn new(vid: u16, pid: u16) -> Self {
-        let device = Self::get_target_device(vid, pid).expect("mx002-driver-err:Error finding device.");
+        let device = Self::get_target_device(vid, pid).expect("mx002-driver-err: Error finding device.");
 
         PhysicalDevice {
             endpoint_address: 0,
