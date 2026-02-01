@@ -20,7 +20,7 @@ fn main() {
     let mut data_reader = RawDataReader::new();
     let mut device_dispatcher = DeviceDispatcher::new();
 
-    println!("The driver is running.");
+    println!("mx002-driver-info:The driver is running.");
     main_loop({
         || {
             if physical_device
@@ -29,7 +29,7 @@ fn main() {
             {
                 device_dispatcher.dispatch(&data_reader);
                 if device_dispatcher.syn().is_err() {
-                    println!("Error emitting SYN.");
+                    println!("mx002-driver-err:Error emitting SYN.");
                 }
             }
         }
@@ -48,5 +48,5 @@ fn main_loop(mut f: impl FnMut()) {
         f();
     }
     println!();
-    println!("The driver has exited.")
+    println!("mx002-driver-info:The driver is exiting.");
 }
