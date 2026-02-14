@@ -1,3 +1,30 @@
+use nix::unistd::Uid;
+
+// netoe1-mod: config for hard exiting
+// fn error_handler() -> Result<(), Box<dyn std::error::Error>> {
+
+//     let err = true;
+
+//     if err {
+//         return Err("error".into());
+//     }
+
+//     Ok(())
+// }
+
+// netoe1-mod: linux things. Will be documented later!
+// Uses functions from nix, and verify if the program is running by sudo.
+// If isn't, exit without cleaning memory! (i'll make it safe later.)
+
+pub fn check_if_has_root_access() {
+
+    if !Uid::effective().is_root(){
+        println!("mx002-config-err: You must run a sudo!");
+        std::process::exit(-1);
+    } 
+}
+
+
 // netoe-mod:
 // Pen pressure sensitivity configuration
 //
@@ -48,7 +75,6 @@
 // PEN_THRESHOLD determines *when* the pen starts touching,
 // PEN_STRENGTH_SCALING determines *how hard* the pen presses.
 
-
 // Putting defaults in a file, that you can change later, based in a pattern.
 
 use std::sync::atomic::{AtomicI32, Ordering};
@@ -69,3 +95,4 @@ pub fn set_pen_threshold(value: i32) {
 pub fn set_pen_strength(value: i32) {
     PEN_STRENGTH_SCALING.store(value, Ordering::Relaxed);
 }
+// #endregion DESKPEN_CONFIG
