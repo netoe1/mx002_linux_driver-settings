@@ -27,11 +27,16 @@ Marvin Belfort - marvinbelfort (original) <a href = "https://github.com/marvinbe
 
 GMHadou (original) - <a href = "https://github.com/GMHadou">Github</a>
 
-
-
-
 # Todo-List
+
+## Main:
 1) Change values from parameters (done)!
 2) Add debug/status messages to terminal (done)!
-3) Add support for JSON input (doing)
+3) Add support for JSON input (done, not testing)...
 4) Add Interface in TK to communicate with JSON Input (todo)
+
+## Sub-main:
+1) Caution with std::proccess:exit(-1), handle threads (todo)
+2) Docs in code (doing)
+3) Refactor old-way to get data, and make simple interface (todo)
+
