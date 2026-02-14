@@ -1,19 +1,21 @@
 // netoe1: This file is responsable to implement a config file for JSON.
 
-
 // netoe1: Libraries and external dependencies.
+
+mod config;
 use serde::Deserialize; 
 use std::fs::File;
 use std::io::BufReader;
 
+
 // netoe1: Our dependencies
 // Importing Methods:
-use crate::config::{set_pen_threshold, set_pen_strength};
 
 const CONFIG_FILE: &str = "mx022-data.json";
 
 // netoe1: Check config.rs to make sense. (I'll create a README file later...)
 #[derive(Deserialize, Debug)]
+
 struct ConfigJSONStruct {
     pen_threshold: i32,          
     pen_strength_scaling: i32        
@@ -40,7 +42,10 @@ fn set_values_to_memory(json_parsed: ConfigJSONStruct){
     // pub fn set_pen_threshold(value: i32) 
     // pub fn set_pen_strength(value: i32)
 
-    set_pen_strength(json_parsed.pen_strength_scaling);
-    set_pen_threshold(json_parsed.pen_threshold);
+    config::set_pen_strength(json_parsed.pen_strength_scaling);
+    config::set_pen_threshold(json_parsed.pen_threshold);
+    config::get_pen_strength();
 }
+
+
 

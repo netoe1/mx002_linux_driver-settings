@@ -1,3 +1,4 @@
+mod json_config;
 use nix::unistd::Uid;
 use std::io;
 
@@ -88,13 +89,27 @@ pub const PEN_STRENGTH_STD: i32 = 2;
 pub static PEN_THRESHOLD: AtomicI32 = AtomicI32::new(PEN_THRESHOLD_STD);
 pub static PEN_STRENGTH_SCALING: AtomicI32 = AtomicI32::new(PEN_STRENGTH_STD);
 
-// Helper setters (clean API)
+// Helper setters/getters (clean API)
 pub fn set_pen_threshold(value: i32) {
     PEN_THRESHOLD.store(value, Ordering::Relaxed);
 }
 
+pub fn get_pen_threshold() -> i32 {
+    PEN_THRESHOLD.load(Ordering::Relaxed)
+}
+
 pub fn set_pen_strength(value: i32) {
     PEN_STRENGTH_SCALING.store(value, Ordering::Relaxed);
+}
+
+
+pub fn get_pen_strength() -> i32 {
+    PEN_STRENGTH_SCALING.load(Ordering::Relaxed)
+}
+
+pub fn output_pen_config(){
+    println!("mx002-info: Pen Strength value = {}",get_pen_strength());
+    println!("mx002-info: Pen Threshold strength = {}",get_pen_threshold());
 }
 // #endregion DESKPEN_CONFIG
 
@@ -107,12 +122,12 @@ pub fn set_pen_strength(value: i32) {
 // In older codes, There is some raw code, so, I'll encapsulate some code over here, to make easier understanding for people.
 // You can call this abstraction or whatever you want to call.
 
-pub fn input_while_executing(){
+pub fn while_executing_input(){
     // netoe1-mod: Adding config interface
     // These values control pen proximity and pressure sensitivity
 
     println!("mx002-driver-info: Using input while executing way");
-    
+
     let mut get_threshold_proximity = String::new();
     let mut get_strength_scaling = String::new();
 
@@ -143,14 +158,24 @@ pub fn input_while_executing(){
 
     let strength = strength.clamp(1, 10);
 
-    println!("mx002-driver-log: Values typed below!");
-    println!("mx002-driver-log: Configured sens.");
-    println!("mx002-driver-log: Threshold proximity = {}", threshold);
-    println!("mx002-driver-log: Strength scaling = {}", strength);
+    // println!("mx002-driver-log: Values typed below!");
+    // println!("mx002-driver-log: Configured sens.");
+    // println!("mx002-driver-log: Threshold proximity = {}", threshold);
+    // println!("mx002-driver-log: Strength scaling = {}", strength);
 
     // Setting values.
     set_pen_strength(strength);
     set_pen_threshold(threshold);
+    get_pen_strength();
+    get_pen_threshold();
+
+}
+
+// netoe1-mod: Here, this is it the json mode, that will be function.
+
+pub fn json_input(raw_data: String){
+
 }
 
 // #endregion CONFIG_PROGRAM_INPUTS
+

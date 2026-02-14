@@ -34,6 +34,7 @@ GMHadou (original) - <a href = "https://github.com/GMHadou">Github</a>
 2) Add debug/status messages to terminal (done)!
 3) Add support for JSON input (done, not testing)...
 4) Add Interface in TK to communicate with JSON Input (todo)
+5) Implement CLI for config (todo)
 
 ## Sub-main:
 1) Caution with std::proccess:exit(-1), handle threads (todo)
