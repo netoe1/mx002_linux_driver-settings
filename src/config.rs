@@ -1,4 +1,5 @@
 use nix::unistd::Uid;
+use std::io;
 
 // netoe1-mod: config for hard exiting
 // fn error_handler() -> Result<(), Box<dyn std::error::Error>> {
@@ -96,3 +97,60 @@ pub fn set_pen_strength(value: i32) {
     PEN_STRENGTH_SCALING.store(value, Ordering::Relaxed);
 }
 // #endregion DESKPEN_CONFIG
+
+
+// #region CONFIG_PROGRAM_INPUTS
+// netoe-mod: Config Program INPUTs
+// The program inputs will determine how actually the driver behavior.
+// First of all, in this version, I'm trying to use only CLI or Input while execution, to make some tests.
+
+// In older codes, There is some raw code, so, I'll encapsulate some code over here, to make easier understanding for people.
+// You can call this abstraction or whatever you want to call.
+
+pub fn input_while_executing(){
+    // netoe1-mod: Adding config interface
+    // These values control pen proximity and pressure sensitivity
+
+    println!("mx002-driver-info: Using input while executing way");
+    
+    let mut get_threshold_proximity = String::new();
+    let mut get_strength_scaling = String::new();
+
+    // --- Threshold ---
+    println!("Set threshold proximity [0-1700], recommended 600:");
+    io::stdin()
+        .read_line(&mut get_threshold_proximity)
+        .expect("mx002-driver-err: Failed to read threshold");
+
+    let threshold: i32 = get_threshold_proximity
+        .trim()
+        .parse()
+        .expect("mx002-driver-err: Threshold must be an integer");
+
+    // Optional safety clamp
+    let threshold = threshold.clamp(0, 1700);
+
+    // --- Strength ---
+    println!("Set strength scaling [1-10], recommended 2:");
+    io::stdin()
+        .read_line(&mut get_strength_scaling)
+        .expect("mx002-driver-err: Failed to read strength");
+
+    let strength: i32 = get_strength_scaling
+        .trim()
+        .parse()
+        .expect("mx002-driver-err: Strength must be an integer");
+
+    let strength = strength.clamp(1, 10);
+
+    println!("mx002-driver-log: Values typed below!");
+    println!("mx002-driver-log: Configured sens.");
+    println!("mx002-driver-log: Threshold proximity = {}", threshold);
+    println!("mx002-driver-log: Strength scaling = {}", strength);
+
+    // Setting values.
+    set_pen_strength(strength);
+    set_pen_threshold(threshold);
+}
+
+// #endregion CONFIG_PROGRAM_INPUTS
