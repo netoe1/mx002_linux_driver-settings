@@ -10,7 +10,7 @@ use std::io::BufReader;
 // Importing Methods:
 use crate::config::{set_pen_threshold, set_pen_strength};
 
-const CONFIG_FILE: &str = "cfg.json";
+const CONFIG_FILE: &str = "mx022-data.json";
 
 // netoe1: Check config.rs to make sense. (I'll create a README file later...)
 #[derive(Deserialize, Debug)]
@@ -20,7 +20,7 @@ struct ConfigJSONStruct {
 }
 
 // netoe1: Function to read cfg json file to
-fn readcfgFile(path: &str) -> ConfigJSONStruct {
+fn read_cfg_file(path: &str) -> ConfigJSONStruct {
     // netoe1: Read from file, using the actual structure defined above.
 
     let file = File::open(path).expect("mx002-err: Cannot find or open JSON config file.");
@@ -32,7 +32,7 @@ fn readcfgFile(path: &str) -> ConfigJSONStruct {
 }
 
 // netoe1: Set values getting from JSON's to load in driver's!
-fn setValuesToMemory(json_parsed: ConfigJSONStruct){
+fn set_values_to_memory(json_parsed: ConfigJSONStruct){
     // netoe1: In config.rs file, we have a simple interface that connects these values
     // to global constants, that I'll be loaded later by the driver.
 
