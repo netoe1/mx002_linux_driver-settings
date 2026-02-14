@@ -1,7 +1,6 @@
 mod virtual_device;
 mod physical_device;
 mod config;
-
 use signal_hook::consts::signal::*;
 use signal_hook::flag::register;
 use std::sync::atomic::{AtomicBool, Ordering};
@@ -12,13 +11,17 @@ use physical_device::PhysicalDevice;
 use virtual_device::{DeviceDispatcher, RawDataReader};
 
 // Interface to change variables in config file.
-use crate::config::{set_pen_threshold, set_pen_strength};
+// use crate::{ config::check_if_has_root_access, config::set_pen_strength, config::set_pen_threshold};
 
 const VID: u16 = 0x08f2;
 const PID: u16 = 0x6811;
 
 
 fn main() {
+    // netoe1-mod: Verifying if program is running as Sudo!
+
+    config::check_if_has_root_access();
+
     let mut physical_device = PhysicalDevice::new(VID, PID);
     physical_device.init().set_full_mode();
 
@@ -64,8 +67,8 @@ fn main() {
     println!("mx002-driver-log: Strength scaling = {}", strength);
 
     // Setting values.
-    set_pen_strength(strength);
-    set_pen_threshold(threshold);
+    config::set_pen_strength(strength);
+    config::set_pen_threshold(threshold);
 
     println!("mx002-driver-log: The driver is running!");
 
