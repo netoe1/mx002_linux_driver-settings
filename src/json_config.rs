@@ -11,7 +11,7 @@ use std::io::BufReader;
 // netoe1: Our dependencies
 // Importing Methods:
 
-const CONFIG_FILE: &str = "mx022-data.json";
+const CONFIG_FILE: &str = "config.json";
 
 // netoe1: Check config.rs to make sense. (I'll create a README file later...)
 #[derive(Deserialize, Debug)]
