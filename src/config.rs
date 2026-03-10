@@ -1,4 +1,4 @@
-mod json_config;
+//mod json_config;
 use nix::unistd::Uid;
 use std::io;
 
@@ -174,7 +174,7 @@ pub fn while_executing_input(){
 // netoe1-mod: Here, this is it the json mode, that will be function.
 
 pub fn json_input(raw_data: String){
-    json_config::read_cfg_file("");
+    //json_config::read_cfg_file("");
 }
 
 // #endregion CONFIG_PROGRAM_INPUTS
