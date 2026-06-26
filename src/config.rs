@@ -146,7 +146,7 @@ pub fn while_executing_input(){
     let threshold = threshold.clamp(0, 1700);
 
     // --- Strength ---
-    println!("Set strength scaling [1-10], recommended 2:");
+    println!("Set strength scaling [1-10], recommended 5:");
     io::stdin()
         .read_line(&mut get_strength_scaling)
         .expect("mx002-driver-err: Failed to read strength");

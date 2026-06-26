@@ -18,7 +18,7 @@ const CONFIG_FILE: &str = "config.json";
 
 struct ConfigJSONStruct {
     pen_threshold: i32,          
-    pen_strength_scaling: i32        
+    pen_pressure: i32        
 }
 
 // netoe1: Function to read cfg json file to
@@ -42,7 +42,7 @@ fn set_values_to_memory(json_parsed: ConfigJSONStruct){
     // pub fn set_pen_threshold(value: i32) 
     // pub fn set_pen_strength(value: i32)
 
-    config::set_pen_strength(json_parsed.pen_strength_scaling);
+    config::set_pen_strength(json_parsed.pen_pressure);
     config::set_pen_threshold(json_parsed.pen_threshold);
     config::get_pen_strength();
 }
